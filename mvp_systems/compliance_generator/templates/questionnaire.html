@@ -1,0 +1,422 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ framework.name }} - {{ section }} Questionnaire</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        :root {
+            --primary-dark: #0a0a1a;
+            --primary-gold: #ffc107;
+            --primary-white: #ffffff;
+            --primary-red: #e91e63;
+            --primary-blue: #1e3a8a;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+                'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+            background-color: var(--primary-dark);
+            color: var(--primary-white);
+            line-height: 1.6;
+        }
+        
+        .container {
+            width: 100%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 1rem;
+        }
+        
+        header {
+            background-color: rgba(10, 10, 26, 0.95);
+            padding: 1rem 0;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+        }
+        
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .logo img {
+            height: 50px;
+            width: auto;
+        }
+        
+        .main-content {
+            padding: 3rem 0;
+        }
+        
+        h1 {
+            font-size: 2.5rem;
+            margin-bottom: 1.5rem;
+            text-align: center;
+            color: var(--primary-gold);
+        }
+        
+        h2 {
+            font-size: 1.8rem;
+            margin-bottom: 1rem;
+            color: var(--primary-white);
+        }
+        
+        p {
+            margin-bottom: 1.5rem;
+            color: #ccc;
+        }
+        
+        .back-link {
+            display: inline-flex;
+            align-items: center;
+            color: var(--primary-gold);
+            text-decoration: none;
+            margin-bottom: 1.5rem;
+            transition: all 0.3s ease;
+        }
+        
+        .back-link i {
+            margin-right: 0.5rem;
+        }
+        
+        .back-link:hover {
+            color: #e6ac00;
+        }
+        
+        .questionnaire-form {
+            background-color: rgba(255, 255, 255, 0.05);
+            border-radius: 0.5rem;
+            padding: 2rem;
+            margin-bottom: 2rem;
+        }
+        
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+        
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 500;
+        }
+        
+        .form-group input[type="text"],
+        .form-group input[type="email"],
+        .form-group input[type="number"],
+        .form-group select,
+        .form-group textarea {
+            width: 100%;
+            padding: 0.75rem;
+            border-radius: 0.375rem;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            background-color: rgba(255, 255, 255, 0.05);
+            color: var(--primary-white);
+            font-family: inherit;
+            font-size: 1rem;
+        }
+        
+        .form-group textarea {
+            min-height: 100px;
+            resize: vertical;
+        }
+        
+        .form-group input:focus,
+        .form-group select:focus,
+        .form-group textarea:focus {
+            outline: none;
+            border-color: var(--primary-gold);
+        }
+        
+        .checkbox-group {
+            margin-top: 0.5rem;
+        }
+        
+        .checkbox-item {
+            display: flex;
+            align-items: center;
+            margin-bottom: 0.5rem;
+        }
+        
+        .checkbox-item input[type="checkbox"] {
+            margin-right: 0.5rem;
+        }
+        
+        .required-mark {
+            color: var(--primary-red);
+            margin-left: 0.25rem;
+        }
+        
+        .btn {
+            display: inline-block;
+            padding: 0.75rem 1.5rem;
+            border-radius: 0.375rem;
+            font-weight: 600;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            border: none;
+            font-size: 1rem;
+        }
+        
+        .btn-primary {
+            background-color: var(--primary-gold);
+            color: var(--primary-dark);
+        }
+        
+        .btn-primary:hover {
+            background-color: #e6ac00;
+        }
+        
+        .btn-outline {
+            background-color: transparent;
+            border: 2px solid var(--primary-gold);
+            color: var(--primary-gold);
+        }
+        
+        .btn-outline:hover {
+            background-color: var(--primary-gold);
+            color: var(--primary-dark);
+        }
+        
+        .form-actions {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 2rem;
+        }
+        
+        footer {
+            background-color: rgba(10, 10, 26, 0.95);
+            padding: 2rem 0 1rem;
+            margin-top: 3rem;
+        }
+        
+        .footer-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1rem;
+        }
+        
+        .footer-logo img {
+            height: 40px;
+            width: auto;
+        }
+        
+        .footer-links a {
+            color: #ccc;
+            text-decoration: none;
+            margin-left: 1.5rem;
+            transition: all 0.3s ease;
+        }
+        
+        .footer-links a:hover {
+            color: var(--primary-gold);
+        }
+        
+        .footer-bottom {
+            text-align: center;
+            padding-top: 1rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        .footer-bottom p {
+            color: #999;
+            font-size: 0.875rem;
+            margin-bottom: 0;
+        }
+        
+        .loading-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(10, 10, 26, 0.9);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+            display: none;
+        }
+        
+        .loading-spinner {
+            border: 5px solid rgba(255, 255, 255, 0.1);
+            border-top: 5px solid var(--primary-gold);
+            border-radius: 50%;
+            width: 50px;
+            height: 50px;
+            animation: spin 1s linear infinite;
+            margin-bottom: 1rem;
+        }
+        
+        .loading-text {
+            color: var(--primary-white);
+            font-size: 1.25rem;
+        }
+        
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        
+        @media (max-width: 768px) {
+            .form-actions {
+                flex-direction: column;
+                gap: 1rem;
+            }
+            
+            .footer-content {
+                flex-direction: column;
+                text-align: center;
+            }
+            
+            .footer-links {
+                margin-top: 1rem;
+            }
+            
+            .footer-links a {
+                margin: 0 0.75rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container">
+            <div class="header-content">
+                <div class="logo">
+                    <a href="/">
+                        <img src="/static/logo.png" alt="Lear Cyber Tech Logo">
+                    </a>
+                </div>
+                <div class="header-links">
+                    <a href="/" class="btn btn-outline">Back to Main Site</a>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <main class="main-content">
+        <div class="container">
+            <a href="/framework/{{ framework_id }}" class="back-link">
+                <i class="fas fa-arrow-left"></i> Back to {{ framework.name }}
+            </a>
+            
+            <h1>{{ framework.name }} - {{ section }}</h1>
+            
+            <p>Please complete the questionnaire below to generate a customized {{ section }} document for your organization. Fields marked with <span class="required-mark">*</span> are required.</p>
+            
+            <form id="questionnaireForm" class="questionnaire-form" action="/generate" method="POST">
+                <input type="hidden" name="framework_id" value="{{ framework_id }}">
+                <input type="hidden" name="section" value="{{ section }}">
+                
+                {% for question in questions %}
+                <div class="form-group">
+                    <label for="{{ question.id }}">
+                        {{ question.text }}
+                        {% if question.required %}
+                        <span class="required-mark">*</span>
+                        {% endif %}
+                    </label>
+                    
+                    {% if question.type == 'text' %}
+                    <input type="text" id="{{ question.id }}" name="{{ question.id }}" {% if question.required %}required{% endif %}>
+                    
+                    {% elif question.type == 'textarea' %}
+                    <textarea id="{{ question.id }}" name="{{ question.id }}" {% if question.required %}required{% endif %}></textarea>
+                    
+                    {% elif question.type == 'select' %}
+                    <select id="{{ question.id }}" name="{{ question.id }}" {% if question.required %}required{% endif %}>
+                        <option value="">-- Select an option --</option>
+                        {% for option in question.options %}
+                        <option value="{{ option }}">{{ option }}</option>
+                        {% endfor %}
+                    </select>
+                    
+                    {% elif question.type == 'checkbox' %}
+                    <div class="checkbox-group">
+                        {% for option in question.options %}
+                        <div class="checkbox-item">
+                            <input type="checkbox" id="{{ question.id }}_{{ loop.index }}" name="{{ question.id }}" value="{{ option }}">
+                            <label for="{{ question.id }}_{{ loop.index }}">{{ option }}</label>
+                        </div>
+                        {% endfor %}
+                    </div>
+                    {% endif %}
+                </div>
+                {% endfor %}
+                
+                <div class="form-actions">
+                    <a href="/framework/{{ framework_id }}" class="btn btn-outline">Cancel</a>
+                    <button type="submit" class="btn btn-primary">Generate Document</button>
+                </div>
+            </form>
+        </div>
+    </main>
+
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-logo">
+                    <img src="/static/logo.png" alt="Lear Cyber Tech Logo">
+                </div>
+                <div class="footer-links">
+                    <a href="https://www.linkedin.com/company/leartech" target="_blank">LinkedIn</a>
+                    <a href="https://wa.me/919946131162" target="_blank">WhatsApp</a>
+                    <a href="mailto:libinpkurian@gmail.com">Email</a>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2025 Lear Cyber Tech. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+    
+    <div id="loadingOverlay" class="loading-overlay">
+        <div class="loading-spinner"></div>
+        <div class="loading-text">Generating your document...</div>
+    </div>
+    
+    <script>
+        document.getElementById('questionnaireForm').addEventListener('submit', function(e) {
+            // Show loading overlay
+            document.getElementById('loadingOverlay').style.display = 'flex';
+            
+            // Handle checkbox values
+            const checkboxGroups = document.querySelectorAll('.checkbox-group');
+            checkboxGroups.forEach(group => {
+                const checkboxes = group.querySelectorAll('input[type="checkbox"]:checked');
+                const values = Array.from(checkboxes).map(cb => cb.value);
+                
+                if (checkboxes.length > 0) {
+                    // Create a hidden input with all selected values
+                    const hiddenInput = document.createElement('input');
+                    hiddenInput.type = 'hidden';
+                    hiddenInput.name = checkboxes[0].name;
+                    hiddenInput.value = values.join(', ');
+                    
+                    // Replace checkboxes with the hidden input
+                    group.querySelectorAll('input[type="checkbox"]').forEach(cb => {
+                        cb.disabled = true;
+                    });
+                    
+                    group.appendChild(hiddenInput);
+                }
+            });
+        });
+    </script>
+</body>
+</html>

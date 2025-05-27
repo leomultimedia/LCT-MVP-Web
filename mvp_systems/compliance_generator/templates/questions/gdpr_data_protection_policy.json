@@ -1,0 +1,62 @@
+[
+    {
+        "id": "org_name",
+        "text": "What is your organization's name?",
+        "type": "text",
+        "required": true
+    },
+    {
+        "id": "org_description",
+        "text": "Briefly describe your organization's activities",
+        "type": "textarea",
+        "required": true
+    },
+    {
+        "id": "org_size",
+        "text": "What is the size of your organization?",
+        "type": "select",
+        "options": ["1-10 employees", "11-50 employees", "51-250 employees", "251-1000 employees", "1000+ employees"],
+        "required": true
+    },
+    {
+        "id": "data_types",
+        "text": "What types of data does your organization process?",
+        "type": "checkbox",
+        "options": ["Personal data", "Sensitive personal data", "Health data", "Financial data", "Employee data", "Customer data", "Other"],
+        "required": true
+    },
+    {
+        "id": "data_subjects",
+        "text": "Who are the data subjects?",
+        "type": "checkbox",
+        "options": ["Customers", "Employees", "Suppliers", "Website visitors", "App users", "Other"],
+        "required": true
+    },
+    {
+        "id": "processing_purposes",
+        "text": "What are the purposes for processing personal data?",
+        "type": "checkbox",
+        "options": ["Service provision", "Marketing", "Analytics", "Legal compliance", "HR management", "Other"],
+        "required": true
+    },
+    {
+        "id": "retention_period",
+        "text": "What is your standard data retention period?",
+        "type": "select",
+        "options": ["Up to 1 year", "1-3 years", "3-5 years", "5-7 years", "7+ years", "Varies by data type"],
+        "required": true
+    },
+    {
+        "id": "security_measures",
+        "text": "What security measures does your organization implement?",
+        "type": "checkbox",
+        "options": ["Encryption", "Access controls", "Regular backups", "Security training", "Incident response plan", "Vulnerability scanning", "Other"],
+        "required": true
+    },
+    {
+        "id": "current_date",
+        "text": "Effective date for this policy",
+        "type": "text",
+        "required": true
+    }
+]
