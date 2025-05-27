@@ -1,0 +1,101 @@
+{
+    "success": true,
+    "message": "",
+    "data": {
+        "id": "105072192",
+        "name": "Lear Cyber Tech",
+        "universalName": "leartech",
+        "linkedinUrl": "https://www.linkedin.com/company/leartech",
+        "tagline": "Securing the Digital Future",
+        "description": "Lear Cyber Tech: Securing the Digital Future\n\n**Vision:**\n\nTo be the leading global cybersecurity solutions provider, empowering organizations to navigate the complex digital landscape with confidence and resilience.\n\n**Mission:**\n\nTo protect critical infrastructure and sensitive data by delivering innovative IT/OT cyber risk and digital transformation services. We are committed to:\n\n* **Innovation:** Continuously pushing the boundaries of cybersecurity technology to stay ahead of emerging threats.\n* **Expertise:** Leveraging our deep industry knowledge and skilled professionals to provide tailored solutions.\n* **Collaboration:** Fostering strong partnerships with clients to build long-lasting relationships and achieve shared success.\n* **Excellence:** Delivering exceptional service and results, exceeding client expectations.\n\n**Core Values:**\n\n* **Integrity:** Upholding the highest ethical standards in all our endeavors.\n* **Customer Focus:** Prioritizing client needs and delivering value-driven solutions.\n* **Innovation:** Embracing new technologies and approaches to stay ahead of the curve.\n* **Teamwork:** Fostering a collaborative and supportive work environment.\n* **Excellence:** Striving for perfection in all aspects of our work.\n\nBy aligning with our vision, mission, and values, Lear Cyber Tech aims to become a trusted partner for organizations worldwide, safeguarding their digital assets and enabling their digital transformation journey.\n",
+        "type": "",
+        "phone": "+919946131162",
+        "Images": {
+            "logo": "https://media.licdn.com/dms/image/v2/D560BAQFj3A7pnJhk4Q/company-logo_400_400/company-logo_400_400/0/1732725890791?e=1753920000&v=beta&t=HwSjSKwxINnHRl2h-qj2IkiVqvF3Xjz8tme-HBQqZtw",
+            "cover": "https://media.licdn.com/dms/image/v2/D561BAQEXTGrGu884ow/company-background_400/B56ZWEZHVwGsAY-/0/1741682932328/leartech_cover?e=1748962800&v=beta&t=MrxNvkjjMrJX7vAmoPluYQb6jQ-vLcPnC_IC2hRMGeY"
+        },
+        "isClaimable": false,
+        "backgroundCoverImages": [
+            {
+                "url": "https://media.licdn.com/dms/image/v2/D561BAQEXTGrGu884ow/company-background_400/B56ZWEZHVwGsAY-/0/1741682932328/leartech_cover?e=1748962800&v=beta&t=MrxNvkjjMrJX7vAmoPluYQb6jQ-vLcPnC_IC2hRMGeY",
+                "width": 400,
+                "height": 67
+            },
+            {
+                "url": "https://media.licdn.com/dms/image/v2/D561BAQEXTGrGu884ow/company-background_10000/B56ZWEZHVwGsAU-/0/1741682932328/leartech_cover?e=1748962800&v=beta&t=rhZb7AQUwXsL__I-E81yjEqOYIVc2PTs8QZ-QRXaHvA",
+                "width": 1128,
+                "height": 191
+            },
+            {
+                "url": "https://media.licdn.com/dms/image/v2/D561BAQEXTGrGu884ow/company-background_200/B56ZWEZHVwGsAc-/0/1741682932328/leartech_cover?e=1748962800&v=beta&t=o5c8chiih-Vp-QWyJi6fk4XDpEyGw7LGtcQQuf0rz_I",
+                "width": 200,
+                "height": 33
+            }
+        ],
+        "logos": [
+            {
+                "url": "https://media.licdn.com/dms/image/v2/D560BAQFj3A7pnJhk4Q/company-logo_200_200/company-logo_200_200/0/1732725890791?e=1753920000&v=beta&t=1I2lUHFw9WM5_8YQuX8Y7aB9CmDU0ZxkJShg1IYBPGk",
+                "width": 200,
+                "height": 200
+            },
+            {
+                "url": "https://media.licdn.com/dms/image/v2/D560BAQFj3A7pnJhk4Q/company-logo_100_100/company-logo_100_100/0/1732725890791?e=1753920000&v=beta&t=FpEMc0EhbjCDMAJ-8nIqYUvsKEBLWIRoPEVm-ZQRO6o",
+                "width": 100,
+                "height": 100
+            },
+            {
+                "url": "https://media.licdn.com/dms/image/v2/D560BAQFj3A7pnJhk4Q/company-logo_400_400/company-logo_400_400/0/1732725890791?e=1753920000&v=beta&t=HwSjSKwxINnHRl2h-qj2IkiVqvF3Xjz8tme-HBQqZtw",
+                "width": 400,
+                "height": 400
+            }
+        ],
+        "staffCount": 1,
+        "headquarter": {
+            "countryCode": "AE",
+            "country": "AE",
+            "city": "Dubai",
+            "postalCode": "0000",
+            "description": "Headquarters",
+            "headquarter": true
+        },
+        "locations": [
+            {
+                "countryCode": "AE",
+                "country": "AE",
+                "city": "Dubai",
+                "postalCode": "0000",
+                "description": "Headquarters",
+                "headquarter": true
+            }
+        ],
+        "industries": [
+            "Computer and Network Security"
+        ],
+        "specialities": [
+            "Cyber Risk Services",
+            "Digital Transformation",
+            "OT/IT Cyber Security",
+            "Managed Services",
+            "Compliances",
+            "Data Analytics",
+            "IT Services"
+        ],
+        "website": "",
+        "founded": {
+            "year": 2023
+        },
+        "callToAction": {
+            "type": "VIEW_CONTACT_INFO",
+            "displayText": "Contact us",
+            "callToActionMessage": {}
+        },
+        "followerCount": 2,
+        "staffCountRange": "2 - 10",
+        "crunchbaseUrl": "",
+        "featuredCustomers": null,
+        "pageVerification": {
+            "verified": false,
+            "lastModifiedAt": 0
+        }
+    }
+}
