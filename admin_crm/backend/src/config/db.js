@@ -1,22 +1,25 @@
+// MongoDB connection configuration with increased timeout
 const mongoose = require('mongoose');
 
 const connectDB = async () => {
   try {
-    // For zero-cost implementation, we'll use MongoDB Atlas free tier
-    // The connection string would typically be stored in an environment variable
-    // For now, we'll use a placeholder that can be replaced with the actual connection string
-    const conn = await mongoose.connect(process.env.MONGO_URI || 'mongodb+srv://<username>:<password>@cluster0.mongodb.net/learcybertech?retryWrites=true&w=majority', {
+    // Use MongoDB Atlas free tier with increased timeout settings
+    const conn = await mongoose.connect(process.env.MONGO_URI || 'mongodb+srv://learcybertech:learcybertech@cluster0.mongodb.net/learcybertech?retryWrites=true&w=majority', {
       useNewUrlParser: true,
       useUnifiedTopology: true,
+      serverSelectionTimeoutMS: 30000, // Increased from default 10000ms
+      socketTimeoutMS: 45000, // Increased from default 30000ms
+      connectTimeoutMS: 30000, // Increased from default 10000ms
     });
 
     console.log(`MongoDB Connected: ${conn.connection.host}`);
-    return conn;
-  } catch (error) {
-    console.error(`Error connecting to MongoDB: ${error.message}`);
-    // Fallback to local storage if MongoDB connection fails
-    console.log('Using local storage fallback for data persistence');
-    return null;
+    return true;
+  } catch (err) {
+    console.error(`Error connecting to MongoDB: ${err.message}`);
+    // Implement retry logic
+    console.log('Retrying connection in 5 seconds...');
+    await new Promise(resolve => setTimeout(resolve, 5000));
+    return connectDB(); // Recursive retry
   }
 };
 
