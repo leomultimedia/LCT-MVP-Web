@@ -1,0 +1,609 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lear Cyber Tech - Admin CRM Dashboard</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js" defer></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body class="bg-gray-100">
+    <div x-data="adminDashboard()" x-init="init()">
+        <!-- Navigation -->
+        <nav class="bg-blue-900 text-white p-4">
+            <div class="container mx-auto flex justify-between items-center">
+                <div class="flex items-center space-x-4">
+                    <h1 class="text-xl font-bold">Lear Cyber Tech CRM</h1>
+                    <span class="text-blue-200">Admin Dashboard</span>
+                </div>
+                <div class="flex items-center space-x-4">
+                    <span class="text-blue-200">Admin: libinpkurian@gmail.com</span>
+                    <i class="fas fa-user-circle text-2xl"></i>
+                </div>
+            </div>
+        </nav>
+
+        <!-- Main Content -->
+        <div class="container mx-auto p-6">
+            <!-- Module Tabs -->
+            <div class="mb-6">
+                <div class="border-b border-gray-200">
+                    <nav class="-mb-px flex space-x-8">
+                        <button @click="activeTab = 'dashboard'" 
+                                :class="activeTab === 'dashboard' ? 'border-blue-500 text-blue-600' : 'border-transparent text-gray-500'"
+                                class="py-2 px-1 border-b-2 font-medium text-sm">
+                            <i class="fas fa-tachometer-alt mr-2"></i>Dashboard
+                        </button>
+                        <button @click="activeTab = 'sales'" 
+                                :class="activeTab === 'sales' ? 'border-blue-500 text-blue-600' : 'border-transparent text-gray-500'"
+                                class="py-2 px-1 border-b-2 font-medium text-sm">
+                            <i class="fas fa-chart-line mr-2"></i>Sales Funnel
+                        </button>
+                        <button @click="activeTab = 'finance'" 
+                                :class="activeTab === 'finance' ? 'border-blue-500 text-blue-600' : 'border-transparent text-gray-500'"
+                                class="py-2 px-1 border-b-2 font-medium text-sm">
+                            <i class="fas fa-dollar-sign mr-2"></i>Finance
+                        </button>
+                        <button @click="activeTab = 'itsm'" 
+                                :class="activeTab === 'itsm' ? 'border-blue-500 text-blue-600' : 'border-transparent text-gray-500'"
+                                class="py-2 px-1 border-b-2 font-medium text-sm">
+                            <i class="fas fa-ticket-alt mr-2"></i>ITSM
+                        </button>
+                        <button @click="activeTab = 'social'" 
+                                :class="activeTab === 'social' ? 'border-blue-500 text-blue-600' : 'border-transparent text-gray-500'"
+                                class="py-2 px-1 border-b-2 font-medium text-sm">
+                            <i class="fas fa-share-alt mr-2"></i>Social Media
+                        </button>
+                    </nav>
+                </div>
+            </div>
+
+            <!-- Dashboard Tab -->
+            <div x-show="activeTab === 'dashboard'" class="space-y-6">
+                <h2 class="text-2xl font-bold text-gray-800">System Overview</h2>
+                
+                <!-- Stats Cards -->
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+                    <div class="bg-white p-6 rounded-lg shadow">
+                        <div class="flex items-center">
+                            <div class="p-3 rounded-full bg-blue-100 text-blue-600">
+                                <i class="fas fa-users text-xl"></i>
+                            </div>
+                            <div class="ml-4">
+                                <p class="text-sm font-medium text-gray-600">Total Users</p>
+                                <p class="text-2xl font-semibold text-gray-900" x-text="dashboardStats.users?.total || 0"></p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="bg-white p-6 rounded-lg shadow">
+                        <div class="flex items-center">
+                            <div class="p-3 rounded-full bg-green-100 text-green-600">
+                                <i class="fas fa-chart-line text-xl"></i>
+                            </div>
+                            <div class="ml-4">
+                                <p class="text-sm font-medium text-gray-600">Total Revenue</p>
+                                <p class="text-2xl font-semibold text-gray-900">$<span x-text="dashboardStats.finance?.total_revenue || 0"></span></p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="bg-white p-6 rounded-lg shadow">
+                        <div class="flex items-center">
+                            <div class="p-3 rounded-full bg-yellow-100 text-yellow-600">
+                                <i class="fas fa-ticket-alt text-xl"></i>
+                            </div>
+                            <div class="ml-4">
+                                <p class="text-sm font-medium text-gray-600">Open Tickets</p>
+                                <p class="text-2xl font-semibold text-gray-900" x-text="dashboardStats.tickets?.open || 0"></p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="bg-white p-6 rounded-lg shadow">
+                        <div class="flex items-center">
+                            <div class="p-3 rounded-full bg-purple-100 text-purple-600">
+                                <i class="fas fa-share-alt text-xl"></i>
+                            </div>
+                            <div class="ml-4">
+                                <p class="text-sm font-medium text-gray-600">Social Posts</p>
+                                <p class="text-2xl font-semibold text-gray-900" x-text="dashboardStats.social_media?.total_posts || 0"></p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- System Health -->
+                <div class="bg-white p-6 rounded-lg shadow">
+                    <h3 class="text-lg font-semibold text-gray-800 mb-4">System Health</h3>
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                        <div class="flex items-center">
+                            <div class="w-3 h-3 bg-green-500 rounded-full mr-3"></div>
+                            <span class="text-gray-700">Database: Healthy</span>
+                        </div>
+                        <div class="flex items-center">
+                            <div class="w-3 h-3 bg-green-500 rounded-full mr-3"></div>
+                            <span class="text-gray-700">API: Operational</span>
+                        </div>
+                        <div class="flex items-center">
+                            <div class="w-3 h-3 bg-green-500 rounded-full mr-3"></div>
+                            <span class="text-gray-700">Automation: Running</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Sales Tab -->
+            <div x-show="activeTab === 'sales'" class="space-y-6">
+                <div class="flex justify-between items-center">
+                    <h2 class="text-2xl font-bold text-gray-800">Sales Funnel & Marketing Automation</h2>
+                    <button @click="generateTestLead()" class="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700">
+                        <i class="fas fa-plus mr-2"></i>Generate Test Lead
+                    </button>
+                </div>
+                
+                <!-- Funnel Stats -->
+                <div class="grid grid-cols-1 md:grid-cols-5 gap-4">
+                    <div class="bg-white p-4 rounded-lg shadow text-center">
+                        <p class="text-sm text-gray-600">New Leads</p>
+                        <p class="text-2xl font-bold text-blue-600" x-text="salesStats.funnel_data?.new || 0"></p>
+                    </div>
+                    <div class="bg-white p-4 rounded-lg shadow text-center">
+                        <p class="text-sm text-gray-600">Contacted</p>
+                        <p class="text-2xl font-bold text-yellow-600" x-text="salesStats.funnel_data?.contacted || 0"></p>
+                    </div>
+                    <div class="bg-white p-4 rounded-lg shadow text-center">
+                        <p class="text-sm text-gray-600">Qualified</p>
+                        <p class="text-2xl font-bold text-orange-600" x-text="salesStats.funnel_data?.qualified || 0"></p>
+                    </div>
+                    <div class="bg-white p-4 rounded-lg shadow text-center">
+                        <p class="text-sm text-gray-600">Converted</p>
+                        <p class="text-2xl font-bold text-green-600" x-text="salesStats.funnel_data?.converted || 0"></p>
+                    </div>
+                    <div class="bg-white p-4 rounded-lg shadow text-center">
+                        <p class="text-sm text-gray-600">Conversion Rate</p>
+                        <p class="text-2xl font-bold text-purple-600" x-text="salesStats.conversion_rate || 0">%</p>
+                    </div>
+                </div>
+
+                <!-- Recent Leads -->
+                <div class="bg-white p-6 rounded-lg shadow">
+                    <h3 class="text-lg font-semibold text-gray-800 mb-4">Recent Leads</h3>
+                    <div class="overflow-x-auto">
+                        <table class="min-w-full divide-y divide-gray-200">
+                            <thead class="bg-gray-50">
+                                <tr>
+                                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Name</th>
+                                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Email</th>
+                                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Score</th>
+                                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Status</th>
+                                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Source</th>
+                                </tr>
+                            </thead>
+                            <tbody class="bg-white divide-y divide-gray-200">
+                                <template x-for="lead in leads" :key="lead.id">
+                                    <tr>
+                                        <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900" x-text="lead.name"></td>
+                                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500" x-text="lead.email"></td>
+                                        <td class="px-6 py-4 whitespace-nowrap">
+                                            <span class="inline-flex px-2 py-1 text-xs font-semibold rounded-full"
+                                                  :class="lead.score >= 70 ? 'bg-green-100 text-green-800' : lead.score >= 50 ? 'bg-yellow-100 text-yellow-800' : 'bg-red-100 text-red-800'"
+                                                  x-text="lead.score"></span>
+                                        </td>
+                                        <td class="px-6 py-4 whitespace-nowrap">
+                                            <span class="inline-flex px-2 py-1 text-xs font-semibold rounded-full bg-blue-100 text-blue-800" x-text="lead.status"></span>
+                                        </td>
+                                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500" x-text="lead.source"></td>
+                                    </tr>
+                                </template>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Finance Tab -->
+            <div x-show="activeTab === 'finance'" class="space-y-6">
+                <div class="flex justify-between items-center">
+                    <h2 class="text-2xl font-bold text-gray-800">Finance & Accounting</h2>
+                    <button @click="generateTestInvoice()" class="bg-green-600 text-white px-4 py-2 rounded-lg hover:bg-green-700">
+                        <i class="fas fa-plus mr-2"></i>Generate Test Invoice
+                    </button>
+                </div>
+                
+                <!-- Finance Stats -->
+                <div class="grid grid-cols-1 md:grid-cols-4 gap-6">
+                    <div class="bg-white p-6 rounded-lg shadow">
+                        <h3 class="text-sm font-medium text-gray-600">Total Revenue</h3>
+                        <p class="text-2xl font-bold text-green-600">$<span x-text="financeStats.total_revenue || 0"></span></p>
+                    </div>
+                    <div class="bg-white p-6 rounded-lg shadow">
+                        <h3 class="text-sm font-medium text-gray-600">Outstanding</h3>
+                        <p class="text-2xl font-bold text-yellow-600">$<span x-text="financeStats.outstanding_amount || 0"></span></p>
+                    </div>
+                    <div class="bg-white p-6 rounded-lg shadow">
+                        <h3 class="text-sm font-medium text-gray-600">Overdue</h3>
+                        <p class="text-2xl font-bold text-red-600">$<span x-text="financeStats.overdue_amount || 0"></span></p>
+                    </div>
+                    <div class="bg-white p-6 rounded-lg shadow">
+                        <h3 class="text-sm font-medium text-gray-600">Payment Rate</h3>
+                        <p class="text-2xl font-bold text-blue-600"><span x-text="financeStats.payment_rate || 0"></span>%</p>
+                    </div>
+                </div>
+
+                <!-- Recent Invoices -->
+                <div class="bg-white p-6 rounded-lg shadow">
+                    <h3 class="text-lg font-semibold text-gray-800 mb-4">Recent Invoices</h3>
+                    <div class="overflow-x-auto">
+                        <table class="min-w-full divide-y divide-gray-200">
+                            <thead class="bg-gray-50">
+                                <tr>
+                                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Invoice #</th>
+                                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Client</th>
+                                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Amount</th>
+                                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Status</th>
+                                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Due Date</th>
+                                </tr>
+                            </thead>
+                            <tbody class="bg-white divide-y divide-gray-200">
+                                <template x-for="invoice in invoices" :key="invoice.id">
+                                    <tr>
+                                        <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900" x-text="invoice.invoice_number"></td>
+                                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500" x-text="invoice.client_name"></td>
+                                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">$<span x-text="invoice.total_amount"></span></td>
+                                        <td class="px-6 py-4 whitespace-nowrap">
+                                            <span class="inline-flex px-2 py-1 text-xs font-semibold rounded-full"
+                                                  :class="invoice.status === 'paid' ? 'bg-green-100 text-green-800' : invoice.status === 'overdue' ? 'bg-red-100 text-red-800' : 'bg-yellow-100 text-yellow-800'"
+                                                  x-text="invoice.status"></span>
+                                        </td>
+                                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500" x-text="invoice.due_date"></td>
+                                    </tr>
+                                </template>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ITSM Tab -->
+            <div x-show="activeTab === 'itsm'" class="space-y-6">
+                <div class="flex justify-between items-center">
+                    <h2 class="text-2xl font-bold text-gray-800">IT Service Management</h2>
+                    <button @click="generateTestTicket()" class="bg-red-600 text-white px-4 py-2 rounded-lg hover:bg-red-700">
+                        <i class="fas fa-plus mr-2"></i>Generate Test Ticket
+                    </button>
+                </div>
+                
+                <!-- ITSM Stats -->
+                <div class="grid grid-cols-1 md:grid-cols-4 gap-6">
+                    <div class="bg-white p-6 rounded-lg shadow">
+                        <h3 class="text-sm font-medium text-gray-600">Open Tickets</h3>
+                        <p class="text-2xl font-bold text-red-600" x-text="itsmStats.status_counts?.open || 0"></p>
+                    </div>
+                    <div class="bg-white p-6 rounded-lg shadow">
+                        <h3 class="text-sm font-medium text-gray-600">In Progress</h3>
+                        <p class="text-2xl font-bold text-yellow-600" x-text="itsmStats.status_counts?.in_progress || 0"></p>
+                    </div>
+                    <div class="bg-white p-6 rounded-lg shadow">
+                        <h3 class="text-sm font-medium text-gray-600">Resolved</h3>
+                        <p class="text-2xl font-bold text-green-600" x-text="itsmStats.status_counts?.resolved || 0"></p>
+                    </div>
+                    <div class="bg-white p-6 rounded-lg shadow">
+                        <h3 class="text-sm font-medium text-gray-600">SLA Compliance</h3>
+                        <p class="text-2xl font-bold text-blue-600"><span x-text="itsmStats.sla_compliance_rate || 0"></span>%</p>
+                    </div>
+                </div>
+
+                <!-- Recent Tickets -->
+                <div class="bg-white p-6 rounded-lg shadow">
+                    <h3 class="text-lg font-semibold text-gray-800 mb-4">Recent Tickets</h3>
+                    <div class="overflow-x-auto">
+                        <table class="min-w-full divide-y divide-gray-200">
+                            <thead class="bg-gray-50">
+                                <tr>
+                                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Ticket #</th>
+                                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Title</th>
+                                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Priority</th>
+                                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Status</th>
+                                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Category</th>
+                                </tr>
+                            </thead>
+                            <tbody class="bg-white divide-y divide-gray-200">
+                                <template x-for="ticket in tickets" :key="ticket.id">
+                                    <tr>
+                                        <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900" x-text="ticket.ticket_number"></td>
+                                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500" x-text="ticket.title"></td>
+                                        <td class="px-6 py-4 whitespace-nowrap">
+                                            <span class="inline-flex px-2 py-1 text-xs font-semibold rounded-full"
+                                                  :class="ticket.priority === 'critical' ? 'bg-red-100 text-red-800' : ticket.priority === 'high' ? 'bg-orange-100 text-orange-800' : ticket.priority === 'medium' ? 'bg-yellow-100 text-yellow-800' : 'bg-green-100 text-green-800'"
+                                                  x-text="ticket.priority"></span>
+                                        </td>
+                                        <td class="px-6 py-4 whitespace-nowrap">
+                                            <span class="inline-flex px-2 py-1 text-xs font-semibold rounded-full bg-blue-100 text-blue-800" x-text="ticket.status"></span>
+                                        </td>
+                                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500" x-text="ticket.category"></td>
+                                    </tr>
+                                </template>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Social Media Tab -->
+            <div x-show="activeTab === 'social'" class="space-y-6">
+                <div class="flex justify-between items-center">
+                    <h2 class="text-2xl font-bold text-gray-800">AI Social Media Automation</h2>
+                    <button @click="generateAIContent()" class="bg-purple-600 text-white px-4 py-2 rounded-lg hover:bg-purple-700">
+                        <i class="fas fa-robot mr-2"></i>Generate AI Content
+                    </button>
+                </div>
+                
+                <!-- Social Stats -->
+                <div class="grid grid-cols-1 md:grid-cols-4 gap-6">
+                    <div class="bg-white p-6 rounded-lg shadow">
+                        <h3 class="text-sm font-medium text-gray-600">Total Posts</h3>
+                        <p class="text-2xl font-bold text-purple-600" x-text="socialStats.total_posts || 0"></p>
+                    </div>
+                    <div class="bg-white p-6 rounded-lg shadow">
+                        <h3 class="text-sm font-medium text-gray-600">Scheduled</h3>
+                        <p class="text-2xl font-bold text-blue-600" x-text="socialStats.scheduled_posts || 0"></p>
+                    </div>
+                    <div class="bg-white p-6 rounded-lg shadow">
+                        <h3 class="text-sm font-medium text-gray-600">Posted Today</h3>
+                        <p class="text-2xl font-bold text-green-600" x-text="socialStats.posted_today || 0"></p>
+                    </div>
+                    <div class="bg-white p-6 rounded-lg shadow">
+                        <h3 class="text-sm font-medium text-gray-600">Engagement Rate</h3>
+                        <p class="text-2xl font-bold text-orange-600"><span x-text="socialStats.engagement_rate || 0"></span>%</p>
+                    </div>
+                </div>
+
+                <!-- Recent Posts -->
+                <div class="bg-white p-6 rounded-lg shadow">
+                    <h3 class="text-lg font-semibold text-gray-800 mb-4">Recent Posts</h3>
+                    <div class="space-y-4">
+                        <template x-for="post in socialPosts" :key="post.id">
+                            <div class="border border-gray-200 rounded-lg p-4">
+                                <div class="flex justify-between items-start mb-2">
+                                    <span class="inline-flex px-2 py-1 text-xs font-semibold rounded-full bg-blue-100 text-blue-800" x-text="post.platform"></span>
+                                    <span class="text-sm text-gray-500" x-text="post.status"></span>
+                                </div>
+                                <p class="text-gray-700 mb-2" x-text="post.content"></p>
+                                <div class="text-sm text-gray-500">
+                                    <span x-show="post.scheduled_time">Scheduled: <span x-text="post.scheduled_time"></span></span>
+                                    <span x-show="post.posted_time">Posted: <span x-text="post.posted_time"></span></span>
+                                </div>
+                            </div>
+                        </template>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function adminDashboard() {
+            return {
+                activeTab: 'dashboard',
+                dashboardStats: {},
+                salesStats: {},
+                financeStats: {},
+                itsmStats: {},
+                socialStats: {},
+                leads: [],
+                invoices: [],
+                tickets: [],
+                socialPosts: [],
+                
+                async init() {
+                    await this.loadDashboardStats();
+                    await this.loadSalesStats();
+                    await this.loadFinanceStats();
+                    await this.loadItsmStats();
+                    await this.loadSocialStats();
+                    await this.loadLeads();
+                    await this.loadInvoices();
+                    await this.loadTickets();
+                    await this.loadSocialPosts();
+                },
+                
+                async loadDashboardStats() {
+                    try {
+                        const response = await fetch('/api/admin/dashboard');
+                        this.dashboardStats = await response.json();
+                    } catch (error) {
+                        console.error('Error loading dashboard stats:', error);
+                    }
+                },
+                
+                async loadSalesStats() {
+                    try {
+                        const response = await fetch('/api/sales/funnel-stats');
+                        this.salesStats = await response.json();
+                    } catch (error) {
+                        console.error('Error loading sales stats:', error);
+                    }
+                },
+                
+                async loadFinanceStats() {
+                    try {
+                        const response = await fetch('/api/finance/dashboard');
+                        this.financeStats = await response.json();
+                    } catch (error) {
+                        console.error('Error loading finance stats:', error);
+                    }
+                },
+                
+                async loadItsmStats() {
+                    try {
+                        const response = await fetch('/api/itsm/dashboard');
+                        this.itsmStats = await response.json();
+                    } catch (error) {
+                        console.error('Error loading ITSM stats:', error);
+                    }
+                },
+                
+                async loadSocialStats() {
+                    try {
+                        const response = await fetch('/api/social/analytics');
+                        this.socialStats = await response.json();
+                    } catch (error) {
+                        console.error('Error loading social stats:', error);
+                    }
+                },
+                
+                async loadLeads() {
+                    try {
+                        const response = await fetch('/api/sales/leads?per_page=5');
+                        const data = await response.json();
+                        this.leads = data.leads || [];
+                    } catch (error) {
+                        console.error('Error loading leads:', error);
+                    }
+                },
+                
+                async loadInvoices() {
+                    try {
+                        const response = await fetch('/api/finance/invoices?per_page=5');
+                        const data = await response.json();
+                        this.invoices = data.invoices || [];
+                    } catch (error) {
+                        console.error('Error loading invoices:', error);
+                    }
+                },
+                
+                async loadTickets() {
+                    try {
+                        const response = await fetch('/api/itsm/tickets?per_page=5');
+                        const data = await response.json();
+                        this.tickets = data.tickets || [];
+                    } catch (error) {
+                        console.error('Error loading tickets:', error);
+                    }
+                },
+                
+                async loadSocialPosts() {
+                    try {
+                        const response = await fetch('/api/social/posts?per_page=5');
+                        const data = await response.json();
+                        this.socialPosts = data.posts || [];
+                    } catch (error) {
+                        console.error('Error loading social posts:', error);
+                    }
+                },
+                
+                async generateTestLead() {
+                    try {
+                        const testLead = {
+                            name: 'Test Lead ' + Math.floor(Math.random() * 1000),
+                            email: 'test' + Math.floor(Math.random() * 1000) + '@example.com',
+                            company: 'Test Company Inc',
+                            source: 'website',
+                            notes: 'Generated test lead for demonstration'
+                        };
+                        
+                        const response = await fetch('/api/sales/leads', {
+                            method: 'POST',
+                            headers: { 'Content-Type': 'application/json' },
+                            body: JSON.stringify(testLead)
+                        });
+                        
+                        if (response.ok) {
+                            await this.loadLeads();
+                            await this.loadSalesStats();
+                            alert('Test lead generated successfully!');
+                        }
+                    } catch (error) {
+                        console.error('Error generating test lead:', error);
+                    }
+                },
+                
+                async generateTestInvoice() {
+                    try {
+                        const testInvoice = {
+                            client_name: 'Test Client ' + Math.floor(Math.random() * 1000),
+                            client_email: 'client' + Math.floor(Math.random() * 1000) + '@example.com',
+                            amount: Math.floor(Math.random() * 5000) + 1000,
+                            description: 'Test invoice for demonstration purposes',
+                            due_date: new Date(Date.now() + 30 * 24 * 60 * 60 * 1000).toISOString().split('T')[0]
+                        };
+                        
+                        const response = await fetch('/api/finance/invoices', {
+                            method: 'POST',
+                            headers: { 'Content-Type': 'application/json' },
+                            body: JSON.stringify(testInvoice)
+                        });
+                        
+                        if (response.ok) {
+                            await this.loadInvoices();
+                            await this.loadFinanceStats();
+                            alert('Test invoice generated successfully!');
+                        }
+                    } catch (error) {
+                        console.error('Error generating test invoice:', error);
+                    }
+                },
+                
+                async generateTestTicket() {
+                    try {
+                        const priorities = ['low', 'medium', 'high', 'critical'];
+                        const categories = ['Security Incident', 'Infrastructure', 'Software Issue', 'Hardware Problem'];
+                        
+                        const testTicket = {
+                            title: 'Test Ticket ' + Math.floor(Math.random() * 1000),
+                            description: 'This is a test ticket generated for demonstration purposes.',
+                            priority: priorities[Math.floor(Math.random() * priorities.length)],
+                            category: categories[Math.floor(Math.random() * categories.length)],
+                            requester_email: 'user' + Math.floor(Math.random() * 1000) + '@example.com'
+                        };
+                        
+                        const response = await fetch('/api/itsm/tickets', {
+                            method: 'POST',
+                            headers: { 'Content-Type': 'application/json' },
+                            body: JSON.stringify(testTicket)
+                        });
+                        
+                        if (response.ok) {
+                            await this.loadTickets();
+                            await this.loadItsmStats();
+                            alert('Test ticket generated successfully!');
+                        }
+                    } catch (error) {
+                        console.error('Error generating test ticket:', error);
+                    }
+                },
+                
+                async generateAIContent() {
+                    try {
+                        const topics = ['cybersecurity', 'compliance', 'technology', 'business'];
+                        const platforms = ['linkedin', 'twitter', 'facebook'];
+                        
+                        const response = await fetch('/api/social/generate-content', {
+                            method: 'POST',
+                            headers: { 'Content-Type': 'application/json' },
+                            body: JSON.stringify({
+                                topic: topics[Math.floor(Math.random() * topics.length)],
+                                platform: platforms[Math.floor(Math.random() * platforms.length)],
+                                count: 3
+                            })
+                        });
+                        
+                        if (response.ok) {
+                            const data = await response.json();
+                            alert(`Generated ${data.count} AI-powered social media posts!`);
+                            await this.loadSocialPosts();
+                            await this.loadSocialStats();
+                        }
+                    } catch (error) {
+                        console.error('Error generating AI content:', error);
+                    }
+                }
+            }
+        }
+    </script>
+</body>
+</html>
+

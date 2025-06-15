@@ -1,9 +1,45 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import './App.css'
 import cyberLearLogo from './assets/CyberLear-Logo.png'
 
 function App() {
   const [activeSection, setActiveSection] = useState('home');
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+
+  // Handle mobile menu toggle
+  const toggleMobileMenu = () => {
+    setMobileMenuOpen(!mobileMenuOpen);
+  };
+
+  // Close mobile menu when a link is clicked
+  const handleMobileNavClick = (section) => {
+    setActiveSection(section);
+    setMobileMenuOpen(false);
+  };
+
+  // Handle scroll to update active section
+  useEffect(() => {
+    const handleScroll = () => {
+      const sections = ['home', 'services', 'systems', 'about', 'contact'];
+      const scrollPosition = window.scrollY + 100;
+
+      for (const section of sections) {
+        const element = document.getElementById(section);
+        if (element) {
+          const offsetTop = element.offsetTop;
+          const offsetHeight = element.offsetHeight;
+
+          if (scrollPosition >= offsetTop && scrollPosition < offsetTop + offsetHeight) {
+            setActiveSection(section);
+            break;
+          }
+        }
+      }
+    };
+
+    window.addEventListener('scroll', handleScroll);
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
 
   return (
     <div className="app">
@@ -21,14 +57,25 @@ function App() {
               <li><a href="#about" onClick={() => setActiveSection('about')} className={activeSection === 'about' ? 'active' : ''}>About</a></li>
               <li><a href="#contact" onClick={() => setActiveSection('contact')} className={activeSection === 'contact' ? 'active' : ''}>Contact</a></li>
             </ul>
-            <div className="mobile-menu-btn">
-              <span></span>
-              <span></span>
-              <span></span>
+            <div className="mobile-menu-btn" onClick={toggleMobileMenu}>
+              <span className={mobileMenuOpen ? 'open' : ''}></span>
+              <span className={mobileMenuOpen ? 'open' : ''}></span>
+              <span className={mobileMenuOpen ? 'open' : ''}></span>
             </div>
           </nav>
         </div>
       </header>
+
+      {/* Mobile Navigation */}
+      <div className={`mobile-nav ${mobileMenuOpen ? 'active' : ''}`}>
+        <ul className="mobile-nav-links">
+          <li><a href="#home" onClick={() => handleMobileNavClick('home')} className={activeSection === 'home' ? 'active' : ''}>Home</a></li>
+          <li><a href="#services" onClick={() => handleMobileNavClick('services')} className={activeSection === 'services' ? 'active' : ''}>Services</a></li>
+          <li><a href="#systems" onClick={() => handleMobileNavClick('systems')} className={activeSection === 'systems' ? 'active' : ''}>Systems</a></li>
+          <li><a href="#about" onClick={() => handleMobileNavClick('about')} className={activeSection === 'about' ? 'active' : ''}>About</a></li>
+          <li><a href="#contact" onClick={() => handleMobileNavClick('contact')} className={activeSection === 'contact' ? 'active' : ''}>Contact</a></li>
+        </ul>
+      </div>
 
       {/* Hero Section */}
       <section id="home" className="hero-section">
@@ -196,7 +243,7 @@ function App() {
           
           <div className="contact-grid">
             <div className="contact-form">
-              <form>
+              <form onSubmit={(e) => e.preventDefault()}>
                 <div className="form-group">
                   <label htmlFor="name">Name</label>
                   <input type="text" id="name" name="name" required />
@@ -282,13 +329,13 @@ function App() {
 
       {/* Social Sidebar */}
       <div className="social-sidebar">
-        <a href="https://www.linkedin.com/company/leartech" target="_blank" rel="noopener noreferrer" className="social-icon">
+        <a href="https://www.linkedin.com/company/leartech" target="_blank" rel="noopener noreferrer" className="social-icon" aria-label="LinkedIn">
           <i className="fab fa-linkedin"></i>
         </a>
-        <a href="https://wa.me/919946131162" target="_blank" rel="noopener noreferrer" className="social-icon">
+        <a href="https://wa.me/919946131162" target="_blank" rel="noopener noreferrer" className="social-icon" aria-label="WhatsApp">
           <i className="fab fa-whatsapp"></i>
         </a>
-        <a href="mailto:libinpkurian@gmail.com" className="social-icon">
+        <a href="mailto:libinpkurian@gmail.com" className="social-icon" aria-label="Email">
           <i className="fas fa-envelope"></i>
         </a>
       </div>
