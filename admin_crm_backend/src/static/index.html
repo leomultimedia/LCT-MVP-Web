@@ -51,6 +51,11 @@
                                 class="py-2 px-1 border-b-2 font-medium text-sm">
                             <i class="fas fa-ticket-alt mr-2"></i>ITSM
                         </button>
+                        <button @click="activeTab = 'products'" 
+                                :class="activeTab === 'products' ? 'border-blue-500 text-blue-600' : 'border-transparent text-gray-500'"
+                                class="py-2 px-1 border-b-2 font-medium text-sm">
+                            <i class="fas fa-box mr-2"></i>Products
+                        </button>
                         <button @click="activeTab = 'social'" 
                                 :class="activeTab === 'social' ? 'border-blue-500 text-blue-600' : 'border-transparent text-gray-500'"
                                 class="py-2 px-1 border-b-2 font-medium text-sm">
@@ -332,6 +337,96 @@
                 </div>
             </div>
 
+            <!-- Products Tab -->
+            <div x-show="activeTab === 'products'" class="space-y-6">
+                <div class="flex justify-between items-center">
+                    <h2 class="text-2xl font-bold text-gray-800">Product Management</h2>
+                    <button @click="showAddProductModal = true" class="bg-indigo-600 text-white px-4 py-2 rounded-lg hover:bg-indigo-700">
+                        <i class="fas fa-plus mr-2"></i>Add Product
+                    </button>
+                </div>
+                
+                <!-- Product Stats -->
+                <div class="grid grid-cols-1 md:grid-cols-4 gap-6">
+                    <div class="bg-white p-6 rounded-lg shadow">
+                        <h3 class="text-sm font-medium text-gray-600">Total Products</h3>
+                        <p class="text-2xl font-bold text-indigo-600" x-text="productStats.total_products || 0"></p>
+                    </div>
+                    <div class="bg-white p-6 rounded-lg shadow">
+                        <h3 class="text-sm font-medium text-gray-600">Templates</h3>
+                        <p class="text-2xl font-bold text-blue-600" x-text="productStats.total_templates || 0"></p>
+                    </div>
+                    <div class="bg-white p-6 rounded-lg shadow">
+                        <h3 class="text-sm font-medium text-gray-600">Total Downloads</h3>
+                        <p class="text-2xl font-bold text-green-600" x-text="productStats.total_downloads || 0"></p>
+                    </div>
+                    <div class="bg-white p-6 rounded-lg shadow">
+                        <h3 class="text-sm font-medium text-gray-600">Revenue</h3>
+                        <p class="text-2xl font-bold text-purple-600">$<span x-text="productStats.total_revenue || 0"></span></p>
+                    </div>
+                </div>
+
+                <!-- Products List -->
+                <div class="bg-white p-6 rounded-lg shadow">
+                    <h3 class="text-lg font-semibold text-gray-800 mb-4">Products</h3>
+                    <div class="overflow-x-auto">
+                        <table class="min-w-full divide-y divide-gray-200">
+                            <thead class="bg-gray-50">
+                                <tr>
+                                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Name</th>
+                                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Type</th>
+                                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Price</th>
+                                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Downloads</th>
+                                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody class="bg-white divide-y divide-gray-200">
+                                <template x-for="product in products" :key="product.id">
+                                    <tr>
+                                        <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900" x-text="product.name"></td>
+                                        <td class="px-6 py-4 whitespace-nowrap">
+                                            <span class="inline-flex px-2 py-1 text-xs font-semibold rounded-full"
+                                                  :class="product.is_template ? 'bg-blue-100 text-blue-800' : 'bg-green-100 text-green-800'"
+                                                  x-text="product.is_template ? 'Template' : 'Product'"></span>
+                                        </td>
+                                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">$<span x-text="product.price"></span></td>
+                                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500" x-text="product.download_count || 0"></td>
+                                        <td class="px-6 py-4 whitespace-nowrap text-sm font-medium">
+                                            <button @click="editProduct(product)" class="text-indigo-600 hover:text-indigo-900 mr-3">Edit</button>
+                                            <button @click="deleteProduct(product.id)" class="text-red-600 hover:text-red-900">Delete</button>
+                                        </td>
+                                    </tr>
+                                </template>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <!-- Downloads List -->
+                <div class="bg-white p-6 rounded-lg shadow">
+                    <h3 class="text-lg font-semibold text-gray-800 mb-4">Recent Downloads</h3>
+                    <div class="overflow-x-auto">
+                        <table class="min-w-full divide-y divide-gray-200">
+                            <thead class="bg-gray-50">
+                                <tr>
+                                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Product</th>
+                                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">User</th>
+                                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Timestamp</th>
+                                </tr>
+                            </thead>
+                            <tbody class="bg-white divide-y divide-gray-200">
+                                <template x-for="download in downloads" :key="download.id">
+                                    <tr>
+                                        <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900" x-text="download.product_name"></td>
+                                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500" x-text="download.user_email || 'Anonymous'"></td>
+                                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500" x-text="new Date(download.timestamp).toLocaleString()"></td>
+                                    </tr>
+                                </template>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
             <!-- Social Media Tab -->
             <div x-show="activeTab === 'social'" class="space-y-6">
                 <div class="flex justify-between items-center">
@@ -392,8 +487,11 @@
                 salesStats: {},
                 financeStats: {},
                 itsmStats: {},
-                socialStats: {},
-                leads: [],
+                productStats: {},
+                products: [],
+                downloads: [],
+                showAddProductModal: false,
+                editingProduct: null,
                 invoices: [],
                 tickets: [],
                 socialPosts: [],
