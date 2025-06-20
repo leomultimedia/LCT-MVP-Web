@@ -1,2 +1,3 @@
 node_modules/\n*.log\n.DS_Store\ndist/\nbuild/\n.env\n.env.local\n.env.development.local\n.env.test.local\n.env.production.local\n.cache/\ncoverage/\n*.zip
 node_modules/
+node_modules/
