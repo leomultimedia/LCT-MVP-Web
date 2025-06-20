@@ -57,10 +57,3 @@ if __name__ == '__main__':
 from src.routes.product import product_bp
 app.register_blueprint(product_bp, url_prefix="/api/products")
 
-
-from src.routes.wizard import wizard_bp, socketio
-app.register_blueprint(wizard_bp, url_prefix="/api/wizard")
-
-# Initialize SocketIO with the app
-socketio.init_app(app, cors_allowed_origins="*")
-
