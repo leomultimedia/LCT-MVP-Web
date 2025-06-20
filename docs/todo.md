@@ -1,63 +1,47 @@
-# Lear Cyber Tech - Project Todo List
+# To-Do List for Enhanced Product Templates
 
-## SPA Website
-- [x] Fix GitHub Pages 404 error
-- [x] Update vite.config.ts with correct base path
-- [x] Build and deploy SPA to GitHub Pages
-- [x] Verify website is accessible at https://leomultimedia.github.io/LCT-MVP-Web/
+## Phase 1: Plan and Design Report Generation, Wizard Interface, and Upload Functionality
+- [x] Research libraries/tools for building wizard-like interfaces (e.g., form builders, state management for multi-step forms).
+- [x] Research libraries/tools for generating Excel reports (e.g., OpenPyXL, XlsxWriter).
+- [x] Research libraries/tools for generating Word reports (e.g., python-docx).
+- [x] Research libraries/tools for generating PDF reports (e.g., ReportLab, FPDF, WeasyPrint).
+- [x] Design the data structure for wizard questions and answers.
+- [x] Design the data structure for report generation parameters (agency info, client info, branding elements).
+- [x] Design the data structure for uploaded template data.
+- [x] Outline API endpoints for template upload and report generation from uploaded data.
+- [x] Plan for dashboard integration of uploaded template data.
 
-## Admin CRM System
+## Phase 2: Implement Backend Wizard Logic, Report Generation, and Upload Processing
+- [x] Create new API endpoints for wizard question retrieval and answer submission.
+- [x] Implement logic to process wizard answers and generate report data.
+- [x] Implement API endpoint for template upload.
+- [x] Implement logic to process uploaded template data and generate reports/dashboards.
+- [x] Implement report generation functions for Excel, Word, and PDF formats.
+- [x] Integrate branding elements (logo, colors, fonts) into report generation.
+- [x] Securely store generated reports temporarily.
+- [x] Implement real-time progress tracking with WebSocket support.
+- [x] Add background task processing for parallel operations.
+- [x] Create automated endpoint testing functionality.
 
-### Sales Funnel Module
-- [x] Create data models for leads, campaigns, pipeline stages
-- [x] Implement API endpoints for sales funnel operations
-- [x] Add authentication system with admin access
-- [x] Develop automation logic for lead scoring and pipeline progression
-- [x] Fix missing forms routes and controllers
-- [x] Validate backend functionality
+## Phase 3: Develop SPA Frontend for Wizard Interfaces and Upload Functionality
+- [ ] Create a dynamic wizard component in the SPA.
+- [ ] Implement step-by-step navigation and form validation for the wizard.
+- [ ] Integrate with backend API to fetch questions and submit answers.
+- [ ] Implement UI for selecting report format (Excel, Word, PDF).
+- [ ] Implement UI for inputting agency and client information.
+- [ ] Implement UI for uploading filled templates.
 
-### Accounting & Finance Module
-- [x] Create models for invoices, expenses, budgets, financial accounts
-- [x] Implement API endpoints for finance operations
-- [x] Develop automation for invoice reminders and recurring expenses
-- [x] Add budget tracking and financial reporting features
-- [x] Validate finance module integration
+## Phase 4: Integrate Wizard, Product Management, and Admin Portal with Dashboard
+- [ ] Modify existing product management in Admin CRM to link products to specific wizards.
+- [ ] Update product display in SPA to trigger wizard instead of direct download for templates.
+- [ ] Enhance download tracking to include report generation details.
+- [ ] Integrate uploaded template data into Admin CRM dashboards.
 
-### ITSM Ticketing System
-- [x] Create models for tickets and knowledge base articles
-- [x] Implement API endpoints for ticket management
-- [x] Develop automation for SLA monitoring and ticket assignment
-- [x] Add knowledge base suggestion system
-- [x] Validate ITSM module integration
+## Phase 5: Branding, Testing, and Deployment of Enhanced Products
+- [ ] Thoroughly test all wizard functionalities.
+- [ ] Verify report generation for all formats with correct branding and data.
+- [ ] Test template upload and report/dashboard generation from uploaded data.
+- [ ] Conduct comprehensive security testing for new features.
+- [ ] Push all changes to Git repository.
+- [ ] Deploy updated SPA and Admin CRM.
 
-### AI Social Media Automation
-- [x] Create models for social media accounts, posts, and content templates
-- [x] Implement API endpoints for social media management
-- [x] Develop automation for post scheduling and analytics
-- [x] Add AI content generation capabilities
-- [x] Validate social media module integration
-
-### Admin Monitoring & Reporting
-- [x] Create models for system metrics and dashboards
-- [x] Implement API endpoints for monitoring and reporting
-- [x] Develop automation for metrics collection and dashboard creation
-- [x] Add cross-module data aggregation
-- [x] Validate monitoring and reporting features
-
-### System-wide Validation
-- [ ] Test full automation across all modules
-- [ ] Verify admin access and permissions
-- [ ] Ensure zero-maintenance operation
-- [ ] Test system resilience and error handling
-- [ ] Validate compliance with GDPR, HIPAA, ISO, NIST, and CSF
-
-## Documentation
-- [x] Create TOGAF ADM documentation for compliance generator
-- [x] Document security compliance validation
-- [ ] Create final system report
-- [ ] Package all code and documentation for delivery
-
-## Git Operations
-- [x] Push all code to GitHub repository
-- [ ] Create .gitignore to exclude node_modules
-- [ ] Tag final release version

@@ -5,8 +5,7 @@ sys.path.insert(0, os.path.dirname(os.path.dirname(__file__)))
 
 from flask import Flask, send_from_directory
 from flask_cors import CORS
-from src.models.user import db
-from src.routes.user import user_bp
+from src.models.user import db, User, Product, Downloadsrc.routes.user import user_bp
 from src.routes.admin import admin_bp
 from src.routes.sales import sales_bp
 from src.routes.finance import finance_bp
@@ -53,4 +52,15 @@ def serve(path):
 
 if __name__ == '__main__':
     app.run(host='0.0.0.0', port=5000, debug=True)
+
+
+from src.routes.product import product_bp
+app.register_blueprint(product_bp, url_prefix="/api/products")
+
+
+from src.routes.wizard import wizard_bp, socketio
+app.register_blueprint(wizard_bp, url_prefix="/api/wizard")
+
+# Initialize SocketIO with the app
+socketio.init_app(app, cors_allowed_origins="*")
 

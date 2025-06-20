@@ -149,3 +149,22 @@ class SocialMediaPost(db.Model):
             'created_at': self.created_at.isoformat() if self.created_at else None
         }
 
+
+
+class Product(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    name = db.Column(db.String(100), nullable=False)
+    description = db.Column(db.Text)
+    file_path = db.Column(db.String(255), nullable=False)
+    price = db.Column(db.Numeric(10, 2), default=0.00)
+    is_template = db.Column(db.Boolean, default=False)
+    created_at = db.Column(db.DateTime, default=datetime.utcnow)
+
+class Download(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
+    product_id = db.Column(db.Integer, db.ForeignKey('product.id'))
+    timestamp = db.Column(db.DateTime, default=datetime.utcnow)
+    user = db.relationship('User', backref=db.backref('downloads', lazy=True))
+    product = db.relationship('Product', backref=db.backref('downloads', lazy=True))
+
